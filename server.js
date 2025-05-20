@@ -1,20 +1,16 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const dotenv = require("dotenv");
+const dotenv = require("dotenv").config();
 const User = require("./models/User");
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// Test route
-app.get("/", (req, res) => {
-  res.send("Backend is working ✅");
-});
+const PORT = process.env.PORT || 3001;
 
 // Connect to MongoDB
 mongoose
@@ -25,7 +21,6 @@ mongoose
 // POST /users
 app.post("/users", async (req, res) => {
   try {
-       console.log("Incoming request body:", req.body);
     const { firstName, lastName, email, dob, phone } = req.body;
 
     if (!firstName || !lastName || !email || !dob || !phone) {
