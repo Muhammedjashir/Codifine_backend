@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const User = require("./models/User");
+const User = require("../models/User");
 
 dotenv.config();
 
@@ -13,7 +13,7 @@ app.use(express.json());
 const PORT = process.env.PORT || 3001;
 
 // Connect to MongoDB
-mongoose
+mongoose 
   .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
@@ -26,6 +26,7 @@ app.post("/users", async (req, res) => {
     if (!firstName || !lastName || !email || !dob || !phone) {
       return res.status(400).json({ error: "Missing required fields" });
     }
+    log(firstName, lastName, email, dob, phone, "User data received");
 
     const newUser = new User({ firstName, lastName, email, dob, phone });
     await newUser.save();
